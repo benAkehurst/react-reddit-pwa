@@ -10,7 +10,10 @@ function App() {
     <div className="App">
       <Router>
         <div>
-          <AppBar position="static">
+          <AppBar
+            position="sticky"
+            style={{ display: 'flex', flexDirection: 'row' }}
+          >
             <div className="App_header__link-wrapper">
               <Typography variant="h6">
                 <Link to="/" className="App_header__link">

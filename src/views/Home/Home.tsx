@@ -2,6 +2,7 @@ import React, { useState } from 'react'; // we need this to make JSX compile
 import axios from 'axios';
 import { defaultSubreddits } from '../../data/defaultSubreddits';
 import { Posts } from '../../components/Posts/Posts';
+import Button from '@material-ui/core/Button';
 
 export const Home = () => {
   const [postData, setPostData] = useState([]);
@@ -18,12 +19,15 @@ export const Home = () => {
         <h4>Select Subreddit:</h4>
         {defaultSubreddits.map((subreddit) => {
           return (
-            <button
+            <Button
+              variant="contained"
+              color="primary"
+              style={{ margin: '0 0.5rem' }}
               key={subreddit.name}
               onClick={() => getData(subreddit.name)}
             >
               {subreddit.name}
-            </button>
+            </Button>
           );
         })}
       </div>
