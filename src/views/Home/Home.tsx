@@ -1,26 +1,40 @@
-import React, { useEffect, useState } from 'react'; // we need this to make JSX compile
+import React, { useState } from 'react'; // we need this to make JSX compile
 import axios from 'axios';
 import { defaultSubreddits } from '../../data/defaultSubreddits';
 import { Posts } from '../../components/Posts/Posts';
 
 export const Home = () => {
   const [postData, setPostData] = useState([]);
-  useEffect(() => {
-    fetchRawData().then((res) => {
-      setPostData(res);
-    });
-  }, []);
+
+  const getData = (url: string) => {
+    fetchRawData(url).then((res) => setPostData(res));
+  };
 
   return (
     <aside>
       <h2>Home</h2>
+      <hr />
+      <div>
+        <h4>Select Subreddit:</h4>
+        {defaultSubreddits.map((subreddit) => {
+          return (
+            <button
+              key={subreddit.name}
+              onClick={() => getData(subreddit.name)}
+            >
+              {subreddit.name}
+            </button>
+          );
+        })}
+      </div>
       {postData && <Posts defaultResults={postData}></Posts>}
     </aside>
   );
 };
 
-const fetchRawData = () => {
-  return axios.get(defaultSubreddits[0].url).then((data) => {
+const fetchRawData = (url: string) => {
+  const baseUrl = 'https://www.reddit.com/r/';
+  return axios.get(`${baseUrl}${url}.json`).then((data) => {
     return data.data.data.children.map((d: any) => ({
       id: d.data.id,
       subreddit: d.data.subreddit,
