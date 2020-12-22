@@ -13,16 +13,15 @@ export const Home = () => {
 
   return (
     <aside>
-      <h2>Home</h2>
-      <hr />
+      <h1>Home</h1>
       <div>
-        <h4>Select Subreddit:</h4>
+        <h2>Select Subreddit:</h2>
         {defaultSubreddits.map((subreddit) => {
           return (
             <Button
               variant="contained"
               color="primary"
-              style={{ margin: '0 0.5rem' }}
+              style={{ margin: '0.5rem 0.5rem' }}
               key={subreddit.name}
               onClick={() => getData(subreddit.name)}
             >
@@ -39,15 +38,16 @@ export const Home = () => {
 const fetchRawData = (url: string) => {
   const baseUrl = 'https://www.reddit.com/r/';
   return axios.get(`${baseUrl}${url}.json`).then((data) => {
-    return data.data.data.children.map((d: any) => ({
-      id: d.data.id,
-      subreddit: d.data.subreddit,
-      selftext: d.data.selftext,
-      title: d.data.title,
-      score: d.data.score,
-      thumbnail: d.data.thumbnail,
-      permalink: d.data.permalink,
-      url: d.data.url,
+    console.log(typeof data.data.data.children);
+    return data.data.data.children.map((singlePost: any) => ({
+      id: singlePost.data.id,
+      subreddit: singlePost.data.subreddit,
+      selftext: singlePost.data.selftext,
+      title: singlePost.data.title,
+      score: singlePost.data.score,
+      thumbnail: singlePost.data.thumbnail,
+      permalink: singlePost.data.permalink,
+      url: singlePost.data.url,
     }));
   });
 };
