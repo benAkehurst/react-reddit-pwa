@@ -1,0 +1,15 @@
+.singlePost {
+  padding: 1rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-self: center;
+
+  div {
+    width: 100%;
+  }
+
+  Button {
+    width: 20%;
+  }
+}
