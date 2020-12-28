@@ -3,6 +3,8 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/blur.css';
 import './Post.scss';
 
 export const Post = (singlePostData: any) => {
@@ -19,8 +21,9 @@ export const Post = (singlePostData: any) => {
       {singlePostData.singlePostData.url
         .toLowerCase()
         .match(/\.(jpg|png|gif)/g) ? (
-        <img
+        <LazyLoadImage
           className={'singlePostImage'}
+          effect="blur"
           src={singlePostData.singlePostData.url}
           alt={'post'}
         />
