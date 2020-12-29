@@ -8,10 +8,11 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 export const Home = () => {
   const [postData, setPostData] = useState([]);
   const [chosenSubreddit, setChosenSubreddit] = useState('');
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [allPostData, setAllPostData] = useState<any | null>(null);
 
   useEffect(() => {
+    setChosenSubreddit('Top Posts');
     fetchTopPosts.then((value) => {
       setAllPostData(value);
     });
@@ -22,6 +23,14 @@ export const Home = () => {
     fetchSubredditPosts(url).then((res) => {
       setIsLoading(false);
       setPostData(res);
+    });
+  };
+
+  const fetchTopPostsManually = () => {
+    setPostData([]);
+    fetchTopPosts.then((value) => {
+      setAllPostData(value);
+      setIsLoading(false);
     });
   };
 
@@ -55,6 +64,21 @@ export const Home = () => {
             </Button>
           );
         })}
+        {postData.length > 1 && (
+          <Button
+            variant="contained"
+            color="primary"
+            style={{ margin: '0.5rem 0.5rem' }}
+            key={'GetAllButton'}
+            onClick={() => {
+              setIsLoading(true);
+              fetchTopPostsManually();
+              setChosenSubreddit('Top Posts');
+            }}
+          >
+            Get Top Posts
+          </Button>
+        )}
       </section>
       <section>
         {postData && (
@@ -64,14 +88,11 @@ export const Home = () => {
           ></Posts>
         )}
       </section>
-      <section>
-        {allPostData && (
-          <Posts
-            defaultResults={allPostData}
-            chosenSubreddit="Top Posts"
-          ></Posts>
-        )}
-      </section>
+      {postData.length < 1 && allPostData && (
+        <section>
+          <Posts defaultResults={allPostData}></Posts>
+        </section>
+      )}
     </main>
   );
 };
