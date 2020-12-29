@@ -8,12 +8,16 @@ import 'react-lazy-load-image-component/src/effects/blur.css';
 import './Post.scss';
 
 export const Post = (singlePostData: any) => {
+  const openInNewTab = (url: string) => {
+    const newWindow = window.open(url, '_blank', 'noopener,noreferrer');
+    if (newWindow) newWindow.opener = null;
+  };
   return (
     <div className={'singlePostWrapper'}>
       <List component="nav" aria-label="single-post">
         <ListItem
           button
-          onClick={() => showPostItem(singlePostData.singlePostData.title)}
+          onClick={() => openInNewTab(singlePostData.singlePostData.url)}
         >
           <ListItemText primary={singlePostData.singlePostData.title} />
         </ListItem>
@@ -32,5 +36,3 @@ export const Post = (singlePostData: any) => {
     </div>
   );
 };
-
-const showPostItem = (postTitle: string) => {};
