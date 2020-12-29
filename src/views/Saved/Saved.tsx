@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react'; // we need this to make JSX compile
+import { Post } from '../../components/Posts/Post/Post';
+import '../../components/Posts/Posts.scss';
 import {
   getAllLocalStorageItems,
   removeFromLocalStorage,
 } from '../../helpers/localStorage';
+import { Button } from '@material-ui/core';
 import { PostItemType } from '../../types/Post.type';
 
 export const Saved = () => {
@@ -12,30 +15,28 @@ export const Saved = () => {
     removeFromLocalStorage(postId);
     setSavedPostData(getAllLocalStorageItems);
   };
-  const openInNewTab = (url: string) => {
-    const newWindow = window.open(url, '_blank', 'noopener,noreferrer');
-    if (newWindow) newWindow.opener = null;
-  };
+
   return (
     <aside>
       <h2>Saved</h2>
-      {savedPostData.map((item: PostItemType) => {
-        return (
-          <div key={item.id}>
-            <span onClick={() => openInNewTab(item.url)}>{item.title}</span>
-            {item.url.toLowerCase().match(/\.(jpg|png|gif)/g) ? (
-              <span>Image Post</span>
-            ) : null}
-            <button
-              onClick={() => {
-                deleteFromSavedPosts(item.id);
-              }}
-            >
-              Delete
-            </button>
-          </div>
-        );
-      })}
+      <hr />
+      <section>
+        {savedPostData.map((singlePostItem: PostItemType) => {
+          return (
+            <div key={singlePostItem.id} className={'singlePost'}>
+              <Post singlePostData={singlePostItem} />
+              <Button
+                variant="contained"
+                color="primary"
+                style={{ margin: '0.5rem 0.5rem' }}
+                onClick={() => deleteFromSavedPosts(singlePostItem.id)}
+              >
+                Delete Saved Post
+              </Button>
+            </div>
+          );
+        })}
+      </section>
     </aside>
   );
 };

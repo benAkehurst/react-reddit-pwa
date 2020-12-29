@@ -64,6 +64,7 @@ export const Home = () => {
             </Button>
           );
         })}
+        <hr />
         {postData.length > 1 && (
           <Button
             variant="contained"
