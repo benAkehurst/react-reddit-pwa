@@ -20,6 +20,7 @@ export const Post = (singlePostData: any) => {
           onClick={() => openInNewTab(singlePostData.singlePostData.url)}
         >
           <ListItemText primary={singlePostData.singlePostData.title} />
+          <ListItemText primary={singlePostData.singlePostData.subreddit} />
         </ListItem>
       </List>
       {singlePostData.singlePostData.url

@@ -1,14 +1,21 @@
-import React, { useState } from 'react'; // we need this to make JSX compile
+import React, { useState, useEffect } from 'react'; // we need this to make JSX compile
 import { defaultSubreddits } from '../../data/defaultSubreddits';
 import { Posts } from '../../components/Posts/Posts';
-import { fetchSubredditPosts } from '../../helpers/getRequests';
+import { fetchSubredditPosts, fetchTopPosts } from '../../helpers/getRequests';
 import Button from '@material-ui/core/Button';
 import LinearProgress from '@material-ui/core/LinearProgress';
 
 export const Home = () => {
   const [postData, setPostData] = useState([]);
   const [chosenSubreddit, setChosenSubreddit] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [allPostData, setAllPostData] = useState<any | null>(null);
+
+  useEffect(() => {
+    fetchTopPosts.then((value) => {
+      setAllPostData(value);
+    });
+  }, []);
 
   const getData = (url: string) => {
     setPostData([]);
@@ -17,6 +24,13 @@ export const Home = () => {
       setPostData(res);
     });
   };
+
+  // TODO:
+  // finish saved page
+  // tests
+  // host - netifly
+  // deploy script
+  // readme and github repo and testing
 
   return (
     <main>
@@ -47,6 +61,14 @@ export const Home = () => {
           <Posts
             defaultResults={postData}
             chosenSubreddit={chosenSubreddit}
+          ></Posts>
+        )}
+      </section>
+      <section>
+        {allPostData && (
+          <Posts
+            defaultResults={allPostData}
+            chosenSubreddit="Top Posts"
           ></Posts>
         )}
       </section>
