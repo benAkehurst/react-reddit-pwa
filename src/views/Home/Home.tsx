@@ -34,13 +34,6 @@ export const Home = () => {
     });
   };
 
-  // TODO:
-  // finish saved page
-  // tests
-  // host - netifly
-  // deploy script
-  // readme and github repo and testing
-
   return (
     <main>
       {isLoading && <LinearProgress color="secondary" />}
